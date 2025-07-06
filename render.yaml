@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ai-readme-generator
+    env: python
+    buildCommand: ""
+    startCommand: python app.py
+    envVars:
+      - key: OPENAI_API_KEY
+        value: your-api-key-here
