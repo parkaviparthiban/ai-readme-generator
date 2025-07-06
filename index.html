@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GitHub ReadMe Generator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    p {
+      margin: 5px 0 0;
+      font-weight: 500;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      margin-top: 15px;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: white;
+      box-sizing: border-box;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+      outline: none;
+      transition: 0.2s;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      margin-top: 15px;
+      margin-right: 10px;
+      padding: 10px 20px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #3b3dd0;
+    }
+
+    pre {
+      background-color: #fff;
+      padding: 20px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 25px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 14px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+      button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>✨ GitHub ReadMe Generator</h1>
+    <p>Craft beautiful README files in seconds</p>
+  </header>
+
+  <div class="card">
+    <label for="title">📌 Project Title</label>
+    <input id="title" placeholder="e.g., AI Chatbot" />
+
+    <label for="description">📝 Description</label>
+    <textarea id="description" placeholder="What is your project about?"></textarea>
+    <button onclick="getAISuggestion()">✨ AI Suggest Description</button>
+
+    <label for="tech">💻 Tech Stack</label>
+    <input id="tech" placeholder="e.g., Python, Flask, React" />
+
+    <label for="installation">⚙️ Installation Steps</label>
+    <textarea id="installation" placeholder="How to install and set up the project?"></textarea>
+
+    <label for="usage">🚀 Usage</label>
+    <textarea id="usage" placeholder="How to use or run your app?"></textarea>
+
+    <label for="license">📄 License</label>
+    <input id="license" placeholder="e.g., MIT" />
+
+    <button onclick="generateMarkdown()">⚙️ Generate</button>
+    <button onclick="downloadReadme()">⬇️ Download README.md</button>
+    <button onclick="downloadMarkdown()">💾 Download README</button>
+  </div>
+
+  <pre id="markdownPreview">Your README will appear here...</pre>
+  <h2>📄 Live Preview</h2>
+<div id="preview" style="border: 1px solid #ccc; padding: 15px; background: #f9f9f9;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js">
+   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  function getAISuggestion() {
+    const title = document.getElementById('title').value.trim();
+    if (!title) {
+      alert("Please enter a project title first.");
+      return;
+    }
+
+    // Simulated AI suggestion (replace this with actual API call if needed)
+    const suggestion = `This project, "${title}", is designed to solve real-world problems using modern web technologies and AI. It offers a user-friendly interface and scalable architecture.`;
+
+    document.getElementById('description').value = suggestion;
+  }
+
+  function generateMarkdown() {
+    const title = document.getElementById('title').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const tech = document.getElementById('tech').value.trim();
+    const installation = document.getElementById('installation').value.trim();
+    const usage = document.getElementById('usage').value.trim();
+    const license = document.getElementById('license').value.trim();
+
+    const markdown = `# ${title}
+
+## 📖 Description  
+${description}
+
+## 🛠️ Tech Stack  
+${tech}
+
+## 🔧 Installation  
+${installation}
+
+## 🚀 Usage  
+${usage}
+
+## 📄 License  
+${license}
+`;
+
+    document.getElementById('markdownPreview').innerText = markdown;
+    document.getElementById('preview').innerHTML = marked.parse(markdown);
+  }
+
+  function downloadMarkdown() {
+    const content = document.getElementById('markdownPreview').innerText;
+    const blob = new Blob([content], { type: 'text/markdown' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'README.md';
+    link.click();
+  }
+
+  function downloadReadme() {
+    downloadMarkdown(); // You can customize this if needed
+  }
+</script>
+</body>
+</html>
