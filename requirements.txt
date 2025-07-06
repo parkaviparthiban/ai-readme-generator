@@ -59,7 +59,6 @@ PyQtWebEngine==5.15.6
 pytesseract==0.3.13
 python-dateutil==2.9.0.post0
 pytz==2024.2
-pywin32==305.1
 PyYAML==6.0.2
 regex==2024.11.6
 requests==2.32.3
