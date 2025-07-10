@@ -12,6 +12,10 @@ CORS(app)
 
 # Initialize OpenAI client with API key from environment
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+@app.route("/")
+def home():
+    return "✅ AI ReadMe Generator is running! Send a POST to /suggest with a title."
+
 
 @app.route("/suggest", methods=["POST"])
 def suggest():
